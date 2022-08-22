@@ -3,67 +3,119 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+
+
+
+
+
+    public function register(Request  $request)
     {
-        $v = Validator::make($request->all(), [
+
+
+        $data = $request->validate([
+            'name' => 'required|string|min:3',
             'email' => 'required|email|unique:users',
-            'password'  => 'required|min:3|confirmed',
+            'password' => 'required|string|min:5',
+
         ]);
-        if ($v->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => $v->errors()
-            ], 422);
-        }
-        $user = new User();
-        $user->email = $request->email;
-        $user->name = $request->name;
-        $user->password = bcrypt($request->password);
-        $user->save();
-        return response()->json(['status' => 'success'], 200);
+
+
+
+        $inputs = $request->all();
+
+
+
+        $user = User::query()->create([
+
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+
+        $token = $user->createToken('My App Tocken')->accessToken;
+
+
+
+        return response()->json([
+
+            'data' => [
+                'name' => $request->name,
+                'email' => $request->email,
+                'token' => $token,
+            ]
+
+        ], 201);
     }
-    public function login(Request $request)
+
+
+
+    public function Login(Request $request)
     {
+
         $credentials = $request->only('email', 'password');
-        if ($token = $this->guard()->attempt($credentials)) {
-            return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
+
+
+
+
+        if (Auth::attempt($credentials)) {
+
+
+            $user = Auth::user();
+
+            $token = $user->createToken('My App Tocken')->accessToken;
+
+            return response([
+                'status' => 'success',
+                'status_code' => 200,
+                'message' => 'Login has been successfully',
+                'data' => [
+                    'user' => $user,
+                    'access_token' => $token
+                ]
+            ], 200);
+        } else {
+
+
+            return response([
+                'status' => 'error',
+                'status_code' => 401,
+                'message' => 'Username or password is not correct',
+                'data' => []
+            ], 201);
         }
-        return response()->json(['error' => 'login_error'], 401);
     }
-    public function logout()
+
+
+
+
+    public function me(Request $request)
     {
-        $this->guard()->logout();
-        return response()->json([
+        $user = $request->user();
+
+        return response()->json(['user' => $user], 200);
+    }
+
+    public function logout(Request $request)
+    {
+        $token = $request->user()->token();
+        $token->revoke();
+        $response =   'You have been successfully logged out!' ;
+
+        return response([
             'status' => 'success',
-            'msg' => 'Logged out Successfully.'
+            'status_code' => 200,
+            'message' => $response,
+            'data' => []
         ], 200);
-    }
-    public function user(Request $request)
-    {
-        $user = User::find(Auth::user()->id);
-        return response()->json([
-            'status' => 'success',
-            'data' => $user
-        ]);
-    }
-    public function refresh()
-    {
-        if ($token = $this->guard()->refresh()) {
-            return response()
-                ->json(['status' => 'successs'], 200)
-                ->header('Authorization', $token);
-        }
-        return response()->json(['error' => 'refresh_token_error'], 401);
-    }
-    private function guard()
-    {
-        return Auth::guard();
     }
 }

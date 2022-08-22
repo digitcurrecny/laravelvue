@@ -1,63 +1,55 @@
 <template>
-    <div class="container">
-        <div class="card card-default">
-            <div class="card-header">Connexion</div>
-            <div class="card-body">
-                <div class="alert alert-danger" v-if="has_error">
-                    <p>Erreur, impossible de se connecter avec ces identifiants.</p>
-                </div>
-                <form autocomplete="off" @submit.prevent="login" method="post">
-                    <div class="form-group">
-                        <label for="email">E-mail</label>
-                        <input type="email" id="email" class="form-control" placeholder="user@example.com" v-model="email"  >
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Mot de passe</label>
-                        <input type="password" id="password" class="form-control" v-model="password"  >
-                    </div>
-                    <button type="submit" class="btn btn-default">Connexion</button>
-                </form>
-            </div>
-        </div>
+  <div>
+    <h1>Login</h1>
+    <div>
+      <label for="email">Email</label>
+      <input type="email" v-model="user.email" />
     </div>
+    <div>
+      <label for="password">Password</label>
+      <input type="password" v-model="user.password" />
+    </div>
+    <button @click="login">Login</button>
+  </div>
 </template>
-<script>
-  export default {
-    data() {
-      return {
-        email: null,
-        password: null,
-        has_error: false
-      }
-    },
-    mounted() {
-      //
-    },
-    methods: {
-      login() {
 
-  console.log('auth');
-        console.log(this);
-        // get the redirect object
-        var redirect = this.$auth.redirect()
-        var app = this
-        this.$auth.login({
-          params: {
-            email: app.email,
-            password: app.password
-          },
-          success: function() {
-            // handle redirection
-            const redirectTo = redirect ? redirect.from.name : this.$auth.user().role === 2 ? 'admin.dashboard' : 'dashboard'
-            this.$router.push({name: redirectTo})
-          },
-          error: function() {
-            app.has_error = true
-          },
-          rememberMe: true,
-          fetchUser: true
+<script>
+import Auth from "../../Auth.js";
+import swal from "sweetalert";
+export default {
+  data() {
+    return {
+      user: {
+        email: "",
+        password: "",
+      },
+    };
+  },
+
+  methods: {
+    login() {
+      axios
+        .post("/api/v1/login", this.user)
+        .then(({ data }) => {
+          if (data.status === "error") {
+            swal("Oops!", `${data.message}`, "error");
+          } else if (data.status === "success") {
+            Auth.login(data.data.access_token,data.data.user.email); //set local storage
+            swal(
+              "success!",
+              "You have successfully logged into your account",
+              "success"
+            );
+                         this.$router.push('/');
+          }
+
         })
-      }
-    }
-  }
+        .catch((error) => {
+
+
+          swal("Oops!", "Something went wrong!", "error");
+        });
+    },
+  },
+};
 </script>

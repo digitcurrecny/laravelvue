@@ -7,7 +7,7 @@ import CompaniesIndex from './components/CompaniesIndex.vue';
 import CompaniesCreate from './components/CompaniesCreate.vue';
 import CompaniesEdit from './components/CompaniesEdit.vue';
 import NotFound from "./components/NotFound.vue"
-
+import Auth from './Auth.js';
 
 
 const routes = [
@@ -16,9 +16,9 @@ const routes = [
     { path: '/login', name : "login", component: login , meta : {auth: false }},
 
 
-    { path: '/', name : "companiesIndex", component: CompaniesIndex , meta : {auth: true }},
-    { path: '/admin/companies/create', name : "createCompany", component: CompaniesCreate , auth: {roles: 2, redirect: {name: 'login'}, forbiddenRedirect: '/403'}},
-    { path: '/admin/companies/edit/:id', name : "editCompany", component: CompaniesEdit , auth: {roles: 2, redirect: {name: 'login'}, forbiddenRedirect: '/403'}},
+    { path: '/', name : "companiesIndex", component: CompaniesIndex ,   meta: { requiresAuth: true }},
+    { path: '/admin/companies/create', name : "createCompany", component: CompaniesCreate ,  meta: { requiresAuth: true } },
+    { path: '/admin/companies/edit/:id', name : "editCompany", component: CompaniesEdit ,   meta: { requiresAuth: true }},
     { path: '/:pathMatch(.*)*', name : "NotFound", component: NotFound },
 
   ]
@@ -35,9 +35,18 @@ const routers = createRouter({
 
 routers.beforeEach((to,fro,next)=>{
 
+    if (to.matched.some(record => record.meta.requiresAuth) ) {
+        if (Auth.check()) {
+            next();
+            return;
+        } else {
+            routers.push({ name: 'login' });
 
-    next();
-    // next(false);
+
+        }
+    } else {
+        next();
+    }
 
 });
 
