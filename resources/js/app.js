@@ -9,13 +9,14 @@
 
  import { createApp } from 'vue';
  import routers from './routers.js';
-
+ import auth from './auth.js'
 
 
 
  const app = createApp();
-
+ app.component('loginlink', require('./Components/layout/LoginLink.vue').default);
 
 
  app.use(routers)
+ app.use(auth)
  app.mount('#app')

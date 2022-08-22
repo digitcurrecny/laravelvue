@@ -14,22 +14,43 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+
+// Route::group(['namespace' => 'App\Http\Controllers\Api\V1', 'prefix' => 'v1',], function ($router) {
+
+//     Route::get('/users/{id?}', 'UsersController@index')->name('user.list');
+
+//     Route::get('register', 'RegisterController@index')->name('user.register');
+//     Route::post('register', 'RegisterController@register')->name('user.register');
+//     Route::get('login', 'loginController@index')->name('user.login');
+//     Route::post('login', 'loginController@login')->name('user.login');
 
 
 
-// Route::group(['prefix' => '/v1', 'namespace' => 'Api\V1', 'as' => 'api.'], function () {
-//     Route::resource('companies', 'CompaniesController', ['except' => ['create', 'edit']]);
-//     });
+// });
 
 
-    Route::group(['namespace' => 'App\Http\Controllers\Api\V1', 'prefix' => 'v1'], function ($router) {
 
+Route::group(['namespace' => 'App\Http\Controllers\Api\V1', 'prefix' => 'v1'], function ($router) {
+    Route::post('register', 'AuthController@register');
+    Route::post('login', 'AuthController@login');
+    Route::get('refresh', 'AuthController@refresh');
+
+
+    Route::group(['middleware' => 'auth:api'], function(){
         Route::resource('companies', 'CompaniesController');
-
+        Route::post('logout', 'AuthController@logout');
     });
+
+ });
+
+
+
+
 
 
 
