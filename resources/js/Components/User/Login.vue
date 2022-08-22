@@ -9,11 +9,11 @@
                 <form autocomplete="off" @submit.prevent="login" method="post">
                     <div class="form-group">
                         <label for="email">E-mail</label>
-                        <input type="email" id="email" class="form-control" placeholder="user@example.com" v-model="email" required>
+                        <input type="email" id="email" class="form-control" placeholder="user@example.com" v-model="email"  >
                     </div>
                     <div class="form-group">
                         <label for="password">Mot de passe</label>
-                        <input type="password" id="password" class="form-control" v-model="password" required>
+                        <input type="password" id="password" class="form-control" v-model="password"  >
                     </div>
                     <button type="submit" class="btn btn-default">Connexion</button>
                 </form>
@@ -35,6 +35,9 @@
     },
     methods: {
       login() {
+
+  console.log('auth');
+        console.log(this);
         // get the redirect object
         var redirect = this.$auth.redirect()
         var app = this
