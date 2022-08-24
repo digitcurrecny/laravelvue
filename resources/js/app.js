@@ -12,12 +12,12 @@
  import VueAxios from 'vue-axios';
  import routers from './routers.js';
  import auth from './Auth.js';
-
+ import store from './store/index.js';
 
 
  const app = createApp();
  app.component('loginlink', require('./Components/layout/LoginLink.vue').default);
- app.use(routers,VueAxios, axios,auth)
-
+ app.use(routers,VueAxios, axios,auth,store)
+ app.use( store)
 
  app.mount('#app')

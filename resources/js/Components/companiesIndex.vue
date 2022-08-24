@@ -7,7 +7,7 @@
     </div>
 
     <div class="panel panel-default">
-      <div class="panel-heading">Companies list</div>
+      <div class="panel-heading">Companies list new</div>
 
       <div v-if="loading" class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -17,7 +17,7 @@
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
-              <th>Company Name</th>
+              <th>Company Name </th>
               <th>Address</th>
               <th>Website</th>
               <th>Email</th>
@@ -62,7 +62,8 @@ import { ref } from "@vue/reactivity";
 import { useRoute } from "vue-router";
 import LaravelVuePagination from 'laravel-vue-pagination';
 import { onMounted } from "vue";
-
+import { computed } from "vue";
+import { useStore } from "vuex";
 
 export default {
   name: "compay lit",
@@ -75,6 +76,15 @@ export default {
   },
 
    setup() {
+
+
+
+
+    const store = useStore();
+     console.log('tets');
+     // const count = computed(() => store.state.count);
+
+
    const companies = ref([]);
     const listPagination = ref([]);
    const loading = ref(true);
