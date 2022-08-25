@@ -1,4 +1,8 @@
-import { createStore } from 'vuex'
+
+import { createStore } from 'vuex';
+
+import tasks from './Moduls/tasks';
+
 
 
 
@@ -71,7 +75,9 @@ const moduleB = {
 const store = createStore({
     modules: {
         moduleA: moduleA,
-        moduleA: moduleB
+        moduleA: moduleB,
+        tasksModul: tasks,
+
     }
 })
 

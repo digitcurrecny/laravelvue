@@ -13,10 +13,11 @@
  import routers from './routers.js';
  import auth from './Auth.js';
  import store from './store/index.js';
-
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
  const app = createApp();
- app.component('loginlink', require('./Components/layout/LoginLink.vue').default);
+//  app.component('loginlink', require('./Components/layout/LoginLink.vue').default);
+ app.component('appheader', require('./Components/layout/appheader.vue').default);
  app.use(routers,VueAxios, axios,auth,store)
  app.use( store)
 

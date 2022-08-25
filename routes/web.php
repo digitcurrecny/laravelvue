@@ -24,6 +24,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // Route::get('/companies', [App\Http\Controllers\CompaniesController::class, 'index'])->name('companies.index');
 
 
-Route::get('/{any?}', [App\Http\Controllers\CompaniesController::class, 'index'])->where('any', '^(?!api\/)[\/\w\.-]*');
+Route::get('/{any?}', [App\Http\Controllers\IndexsController::class, 'index'])->where('any', '^(?!api\/)[\/\w\.-]*');
 
 
