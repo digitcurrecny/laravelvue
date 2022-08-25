@@ -21,14 +21,14 @@ import { useStore } from "vuex";
 export default {
 
 
-  setup() {
-    const store = useStore();
-    const count = computed(() => store.state.count);
+//   setup() {
+//     const store = useStore();
+//     const count = computed(() => store.state.count);
 
-    return {
-      count
-    };
-  },
+//     return {
+//       count
+//     };
+//   },
 
   data() {
     return {

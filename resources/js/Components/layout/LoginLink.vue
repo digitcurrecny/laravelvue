@@ -16,6 +16,17 @@
     <li class="nav-item">
       <router-link to="/register"> |{{ count }} |</router-link>
     </li>
+
+    <button @click="mutations" >mutations</button>
+
+        <button @click="actions" >actions</button>
+
+    <!-- <div v-for="todo in todos" :key="todo.id">{{ todo }}</div>
+
+    <div v-for="todo in donetodos" :key="todo.id">{{ todo }}</div>
+
+    <div >{{ donetodosByid }}</div> -->
+
     <!--
     <li class="nav-item">
       <router-link to="/about">About</router-link
@@ -31,14 +42,32 @@ import swal from "sweetalert";
 import { computed } from "vue";
 import { mapState, useStore } from "vuex";
 export default {
-  //   setup() {
-  //     const store = useStore();
-  //     const count = computed(() => store.state.count);
+    setup() {
+      const store = useStore();
+      const count = computed(() => store.state.moduleA.count);
 
-  //     return {
-  //       count
-  //     };
-  //   },
+
+
+
+ function mutations() {
+
+   store.commit('moduleA/increment', 2);
+
+ }
+
+
+ function actions() {
+
+   store.dispatch('moduleA/increment',  { number : 4});
+
+ }
+
+
+
+      return {
+        count,actions,mutations
+      };
+    },
 
   // computed: {
   //   count() {
@@ -53,9 +82,47 @@ export default {
   //   },
   // },
 
-  computed: {
-    ...mapState(["count"]),
-  },
+  //   computed: {
+  //     ...mapState(["count"]),
+  //   },
+
+//   computed: {
+//     todos() {
+//       return this.$store.state.todos;
+//     },
+
+//     donetodos() {
+//       return this.$store.getters.doneTodos;
+//     },
+
+
+//     donetodos() {
+//       return this.$store.getters['moduleA/doneTodos'] ;
+//     },
+
+
+//     donetodosByid() {
+//       return this.$store.getters.getTodoById(2);
+//     },
+//   },
+
+
+
+
+
+    // setup() {
+    //   const store = useStore();
+    //   const donetodos = computed(() => store.getters.doneTodos);
+    //        const donetodosByid = computed(() => store.getters.getTodoById(2));
+
+    //   return {
+    //     donetodos,donetodosByid
+    //   };
+    // },
+
+
+
+
 
   data() {
     return {
