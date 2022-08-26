@@ -21,6 +21,11 @@
             <li class="nav-item">
             <router-link class="nav-link " aria-current="page"  to="/tasks">Tasks</router-link>
           </li>
+
+            <li class="nav-item">
+            <router-link class="nav-link " aria-current="page"  to="/products">Products</router-link>
+          </li>
+
           <li class="nav-item">
             <a class="nav-link" href="#">Pricing</a>
           </li>
@@ -28,14 +33,37 @@
           <a class="nav-link disabled">Disabled</a>
         </li> -->
         </ul>
+
+
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <router-link class="nav-link p-1 me-3" to="/cart">
+                <span class="badge rounded-pill bg-primary me-1">{{ countCartItems }}</span>
+                <i class="bi bi-basket-fill" style="font-size:23px"></i>
+            </router-link>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>
 </template>
 
 <script>
-export default {};
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+export default {
+
+  setup(){
+    const store = useStore();
+    const countCartItems = computed(() => store.getters['cart/count'])
+
+    return{
+      countCartItems
+    }
+  }
+};
 </script>
+
 
 <style>
 

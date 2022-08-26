@@ -11,6 +11,8 @@ import CompaniesIndex from './components/CompaniesIndex.vue';
 import CompaniesCreate from './components/CompaniesCreate.vue';
 import CompaniesEdit from './components/CompaniesEdit.vue';
 import Tasks from './components/Tasks/Tasks.vue';
+import Products from './Components/Products/Products.vue';
+import Cart from './Components/Products/Cart.vue';
 
 import NotFound from "./components/NotFound.vue"
 import Auth from './Auth.js';
@@ -19,6 +21,8 @@ import Auth from './Auth.js';
 const routes = [
     { path: '/', name : "Index", component: Index , meta : {auth: false }},
     { path: '/tasks', name : "tasks", component: Tasks , meta : {auth: false }},
+    { path: '/products', name : "products", component: Products , meta : {auth: false }},
+    { path: '/cart', name : "Cart", component: Cart , meta : {auth: false }},
 
 
     { path: '/register', name : "register", component: Register , meta : {auth: false }},

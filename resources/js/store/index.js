@@ -2,7 +2,8 @@
 import { createStore } from 'vuex';
 
 import tasks from './Moduls/tasks';
-
+import product from './Moduls/product';
+import cart from './Moduls/cart.js'
 
 
 
@@ -77,6 +78,10 @@ const store = createStore({
         moduleA: moduleA,
         moduleA: moduleB,
         tasksModul: tasks,
+        product: product,
+        cart: cart,
+
+
 
     }
 })
