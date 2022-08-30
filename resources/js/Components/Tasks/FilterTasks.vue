@@ -13,7 +13,8 @@
 <script>
 
 import { computed, ref } from "vue";
-import { useStore } from "vuex";
+import { useTasksStore } from "../../store/tasks.js";
+
 export default {
 
 
@@ -21,14 +22,14 @@ export default {
 
     const loading = ref(false);
         const number = ref();
-    const store = useStore();
-    const tasks = computed(() => store.getters["tasksModul/allTasks"]);
+    const store = useTasksStore();
+    const tasks = computed(() => store.allTasks );
 
 
   async  function FilterTasks() {
 
     console.log(number.value);
-      await store.dispatch("tasksModul/filterTasks",number.value);
+      await store.filterTasks(number.value);
 
     }
 

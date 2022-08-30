@@ -36,8 +36,17 @@
               </td>
               <td class="align-middle">{{ item.price }}</td>
               <td class="align-middle">
-                <button
+
+              <!-- Vue x -->
+              <!-- <button
                   @click="increment(item.id)"
+                  class="btn btn-sm btn-dark me-2"
+                >
+                  +
+                </button> -->
+
+                                <button
+                  @click="increment(psiniaStore.increment)"
                   class="btn btn-sm btn-dark me-2"
                 >
                   +
@@ -79,6 +88,7 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
+import { usePiniaStore } from "../../store/pinia.js";
 
 export default {
   setup() {
@@ -105,13 +115,17 @@ export default {
     }
 
 
+////////////////////pinian
+    const psiniaStore = usePiniaStore();
+
     return {
       cartItems,
       cartTotalAmount,
       increment,
       decrement,
       remove,
-      clear
+      clear,
+      psiniaStore
     };
   },
 };

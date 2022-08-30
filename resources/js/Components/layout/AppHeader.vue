@@ -50,12 +50,12 @@
 
 <script>
 import { computed } from 'vue';
-import { useStore } from 'vuex';
+
 export default {
 
   setup(){
-    const store = useStore();
-    const countCartItems = computed(() => store.getters['cart/count'])
+
+    const countCartItems = 22;
 
     return{
       countCartItems

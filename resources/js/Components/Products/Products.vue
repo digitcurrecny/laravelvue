@@ -11,8 +11,20 @@
                 {{ product.description }}
               </p>
             </div>
-            <div class="card-footer d-flex justify-content-between align-items-center">
-              <button @click="addToCart(product)" class="btn btn-outline-success btn-sm">Add To Cart</button>
+            <div
+              class="
+                card-footer
+                d-flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <button
+                @click="addToCart(product)"
+                class="btn btn-outline-success btn-sm"
+              >
+                Add To Cart
+              </button>
               <span>{{ product.price }}</span>
             </div>
           </div>
@@ -23,28 +35,33 @@
 </template>
 
 <script>
-
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
+import { storeToRefs } from "pinia";
+
+import { usePiniaStore } from "../../store/pinia.js";
 export default {
   setup() {
     const loading = ref(false);
     const store = useStore();
-    const products = computed(() => store.getters["product/allProducts"]);
+    // Vue X
+    //  const products = computed(() => store.getters["product/allProducts"]);
 
-     function addToCart(product){
-      store.dispatch('cart/addToCart' , product)
+    //Pinian//
+    const psiniaStore = usePiniaStore();
+    // const { products } = storeToRefs(psiniaStore);
+    const products = computed(() => psiniaStore.allProducts);
+    function addToCart(product) {
+      store.dispatch("cart/addToCart", product);
     }
 
-      return {
+    return {
       store,
       products,
-            addToCart
+      addToCart,
+      psiniaStore,
     };
   },
-
-
-
 };
 </script>
 

@@ -16,20 +16,21 @@
 <script>
 
 import { ref } from "vue";
-import { useStore } from "vuex";
+import { useTasksStore } from "../../store/tasks.js";
+
 export default {
   props: ["task"],
 
 
   setup() {
-    const store = useStore();
+    const store = useTasksStore();
 
     const loading = ref(false);
     async function updaTetaks(task) {
 
           loading.value = true;
 
-        await store.dispatch("tasksModul/updaTetaks",task);
+        await store.updaTetaks( task);
               loading.value = false;
 
     };
@@ -37,7 +38,7 @@ export default {
 
           loading.value = true;
 
-        await store.dispatch("tasksModul/delteTetaks",task.id);
+        await store.delteTetaks(task.id);
               loading.value = false;
 
     }

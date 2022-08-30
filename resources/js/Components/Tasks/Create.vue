@@ -17,10 +17,12 @@
 
 <script>
 import { ref } from "vue";
-import { useStore } from "vuex";
+
+import { useTasksStore } from "../../store/tasks.js";
+
 export default {
   setup() {
-    const store = useStore();
+    const store = useTasksStore();
     const title = ref("");
     const titleErrorText = ref("");
     const loading = ref(false);
@@ -30,7 +32,7 @@ export default {
       } else {
           loading.value = true;
           titleErrorText.value = '';
-        await store.dispatch("tasksModul/storeTask", title.value);
+        await store.storeTask( title.value);
               loading.value = false;
       }
     }

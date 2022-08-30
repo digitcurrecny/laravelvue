@@ -25,7 +25,6 @@
           </div>
 
           <UpdateTask :task="task" />
-
         </div>
       </div>
     </div>
@@ -34,27 +33,29 @@
 
 <script>
 import { computed, ref } from "vue";
-import { useStore } from "vuex";
+import { useTasksStore } from "../../store/tasks.js";
 import FilterTasks from "./FilterTasks.vue";
 import Create from "./Create.vue";
 import UpdateTask from "./UpdateTask.vue";
+
 
 export default {
   components: {
     FilterTasks,
     Create,
     UpdateTask,
-
   },
 
   setup() {
     const loading = ref(false);
-    const store = useStore();
-    const tasks = computed(() => store.getters["tasksModul/allTasks"]);
+    const store = useTasksStore();
+
+    console.log(store);
+    const tasks = computed(() => store.allTasks);
 
     async function fetchTasks() {
       loading.value = true;
-      await store.dispatch("tasksModul/fetchTasks");
+      await store.fetchTasks();
       loading.value = false;
     }
     fetchTasks();
@@ -62,6 +63,7 @@ export default {
     return {
       tasks,
       loading,
+
     };
   },
 };
