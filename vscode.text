@@ -1,0 +1,51 @@
+1-	 VSCode 
+2-	 Git
+3-	Coposer
+4-	Advanced New File.1 Ctrl + Alt + N
+5-	File Utils Ctrl + P
+6-	PHP Intelephense
+7-	Laravel 5 Snippets
+8-	Laravel Artisan Ctrl+Shift+P
+9-	PHP Debug
+10-	 DocBlocker
+11-	 phpfmt – PHP formatter CTRL + ALT + F
+12-	Import Checker
+13-	PHP Files
+14-	
+15-	 Composer >
+cd /tmp
+1 nano composer-installer.sh
+2 #!/bin/sh
+EXPECTED_CHECKSUM="$(wget -q -O - https://composer.github.io/installer.sig)"
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+ACTUAL_CHECKSUM="$(php -r "echo hash_file('sha384', 'composer-setup.php');")"
+if [ "$EXPECTED_CHECKSUM" != "$ACTUAL_CHECKSUM" ]
+then
+    >&2 echo 'ERROR: Invalid installer checksum'
+    rm composer-setup.php
+    exit 1
+fi
+php composer-setup.php --quiet
+RESULT=$?
+rm composer-setup.php
+exit $RESULT
+3- ctrl+shift+v
+4- ls | grep composer-installer.sh
+5- sudo chmod +x composer-installer.sh
+6 - mv composer.phar /usr/local/bin/composer
+7 - composer
+8 - composer self-update
+
+sudo apt update
+
+1-	sudo apt -y install default-jdk
+2-	java -version
+ wget -O - https://dbeaver.io/debs/dbeaver.gpg.key | sudo apt-key add -
+3-	echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
+ sudo apt update
+4-	sudo apt install dbeaver-ce
+5-	  apt policy dbeaver-ce
+6-	
+7-	
+
+
